@@ -4,18 +4,20 @@
         <th scope="col">#</th>
         <th scope="col">First</th>
         <th scope="col">Last</th>
+        <th scope="col">Email</th>
         <th scope="col">Username</th>
-        <th scope="col">E-mail</th>
+        <th scope="col">Avatar</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Cristian</td>
-        <td>Ruiz</td>
-        <td>c.r.username</td>
-        <td>c.r.username@blog.com</td>
+    <tr th:each="user: ${userList}">
+        <th th:text="${user.id}"  scope="row"></th>
+        <th th:text="${user.firstName}"  scope="row"></th>
+        <th th:text="${user.lastName}"  scope="row"></th>
+        <th th:text="${user.email}"  scope="row"></th>
+        <th th:text="${user.username}"  scope="row"></th>
+        <th scope="row"><img th:src="${user.imgURL}" width="72" class="img-fluid"/></th>
         <td>
             <a href="#"><i class="fas fa-edit"></i></a> | <a href="#"><i class="fas fa-user-times"></i></a>
         </td>

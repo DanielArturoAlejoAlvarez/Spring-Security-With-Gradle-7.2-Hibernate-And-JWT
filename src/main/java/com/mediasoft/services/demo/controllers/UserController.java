@@ -44,6 +44,17 @@ public class UserController {
         if (result.hasErrors()) {
             model.addAttribute("userForm", user);
             model.addAttribute("formTab", "active");
+        }else {
+            try {
+                service.createUser(user);
+            } catch (Exception e) {
+                model.addAttribute("formErrorMessage", e.getMessage());
+                model.addAttribute("userForm", user);
+                model.addAttribute("formTab", "active");
+                model.addAttribute("userList", service.getAllUsers());
+                model.addAttribute("roles", roleRepo.findAll());
+                //e.printStackTrace();
+            }
         }
         model.addAttribute("userList", service.getAllUsers());
         model.addAttribute("roles", roleRepo.findAll());

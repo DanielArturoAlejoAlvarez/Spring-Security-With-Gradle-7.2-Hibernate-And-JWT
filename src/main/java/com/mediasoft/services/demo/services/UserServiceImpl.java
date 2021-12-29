@@ -17,15 +17,23 @@ public class UserServiceImpl implements IUserService{
         return repo.findAll();
     }
 
-    private boolean checkUsernameExists(User user) throws Exception {
+    @Override
+    public User createUser(User user) throws Exception {
+        if (checkPasswordValid(user) && checkUsernameAvailable(user)) {
+            user = repo.save(user);
+        }
+        return user;
+    }
+
+    private boolean checkUsernameAvailable(User user) throws Exception {
         Optional<User> userFound = repo.findByUsername(user.getUsername());
         if (userFound.isPresent()) {
             throw new Exception("User not available!");
         }
-        return false;
+        return true;
     }
 
-    private boolean checkPasswordMatch(User user) throws Exception {
+    private boolean checkPasswordValid(User user) throws Exception {
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             throw new Exception("Password and confirmation password are not the same");
         }

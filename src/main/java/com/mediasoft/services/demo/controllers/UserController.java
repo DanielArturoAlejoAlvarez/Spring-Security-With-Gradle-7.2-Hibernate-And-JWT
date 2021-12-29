@@ -31,4 +31,6 @@ public class UserController {
         model.addAttribute("listTab", "active");
         return "user-form/user-view";
     }
+
+    
 }

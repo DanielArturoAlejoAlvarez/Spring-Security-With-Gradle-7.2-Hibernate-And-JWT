@@ -3,6 +3,9 @@
         <label class="col-lg-3 col-form-label form-control-label">First name</label>
         <div class="col-lg-9">
             <input class="form-control" type="text" th:field="${userForm.firstName}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                Error First Name
+            </div>
         </div>
     </div>
     <div class="form-group row">
@@ -10,24 +13,27 @@
             name</label>
         <div class="col-lg-9">
             <input class="form-control" type="text"  th:field="${userForm.lastName}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('lastName'}" th:errors="*{lastName}">
+                Error Last Name
+            </div>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Email</label>
         <div class="col-lg-9">
             <input class="form-control" type="email" th:field="${userForm.email}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                Error Email
+            </div>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Username</label>
         <div class="col-lg-9">
             <input class="form-control" type="text" th:field="${userForm.username}" >
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Password</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="password" th:field="${userForm.password}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                Error Username
+            </div>
         </div>
     </div>
 
@@ -37,6 +43,19 @@
             <select class="form-control" size="4" th:field="${userForm.roles}">
                 <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
             </select>
+            <div class="alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">
+                Error Roles
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Password</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="password" th:field="${userForm.password}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                Error Password
+            </div>
         </div>
     </div>
 
@@ -44,13 +63,19 @@
         <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
         <div class="col-lg-9">
             <input class="form-control" type="password" th:field="${userForm.passwordConfirmation}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">
+                Error Password Confirmation
+            </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Avatar URL</label>
+        <label class="col-lg-3 col-form-label form-control-label">Image URL</label>
         <div class="col-lg-9">
             <input class="form-control" type="text" th:field="${userForm.imgURL}" >
+            <div class="alert-danger" th:if="${#fields.hasErrors('imgURL')}" th:errors="*{imgURL}">
+                Error Image URL
+            </div>
         </div>
     </div>
 

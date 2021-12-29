@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -19,20 +21,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native", strategy = "native")
     private Long id;
+
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
     @Column(unique = true, nullable = false)
     private String email;
+    @NotBlank
+    @Size(min = 4, max = 100, message = "Not the correct size!")
     @Column(unique = true)
     private String username;
+    @NotBlank
     @Column(nullable = false)
     private String password;
 
     @Transient
+    @NotBlank
     private String passwordConfirmation;
 
-    @Column(length = 512, nullable = true)
+    @Column(length = 512)
     private String imgURL;
+
     private Boolean status;
 
     @ManyToMany(fetch = FetchType.LAZY)

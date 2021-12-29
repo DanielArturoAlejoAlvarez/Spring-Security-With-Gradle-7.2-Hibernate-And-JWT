@@ -1,4 +1,4 @@
-<form class="form" role="form" autocomplete="off" th:object="${userForm}">
+<form class="form" role="form" autocomplete="off" th:object="${userForm}" th:action="@{/userForm}" method="POST">
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">First name</label>
         <div class="col-lg-9">
@@ -13,7 +13,7 @@
             name</label>
         <div class="col-lg-9">
             <input class="form-control" type="text"  th:field="${userForm.lastName}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('lastName'}" th:errors="*{lastName}">
+            <div class="alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
                 Error Last Name
             </div>
         </div>
@@ -73,16 +73,14 @@
         <label class="col-lg-3 col-form-label form-control-label">Image URL</label>
         <div class="col-lg-9">
             <input class="form-control" type="text" th:field="${userForm.imgURL}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('imgURL')}" th:errors="*{imgURL}">
-                Error Image URL
-            </div>
+
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-lg-12 text-center">
             <input type="reset" class="btn btn-secondary" value="Cancel">
-            <input type="button" class="btn btn-primary"
+            <input type="submit" class="btn btn-primary"
                    value="Save Changes">
         </div>
     </div>

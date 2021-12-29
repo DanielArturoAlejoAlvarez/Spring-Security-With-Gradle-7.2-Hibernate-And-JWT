@@ -24,4 +24,11 @@ public class UserServiceImpl implements IUserService{
         }
         return false;
     }
+
+    private boolean checkPasswordMatch(User user) throws Exception {
+        if (!user.getPassword().equals(user.getPasswordConfirmation())) {
+            throw new Exception("Password and confirmation password are not the same");
+        }
+        return true;
+    }
 }

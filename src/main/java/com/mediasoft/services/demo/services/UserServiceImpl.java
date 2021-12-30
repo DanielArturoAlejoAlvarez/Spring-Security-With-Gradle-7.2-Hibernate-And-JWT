@@ -30,6 +30,13 @@ public class UserServiceImpl implements IUserService{
         return repo.findById(id).orElseThrow(() -> new Exception("User to edit does not exist!"));
     }
 
+    @Override
+    public User updateUser(User fromUser) throws Exception {
+        User toUser = findById(fromUser.getId());
+        mapUser(fromUser,toUser);
+        return repo.save(toUser);
+    }
+
     private boolean checkUsernameAvailable(User user) throws Exception {
         Optional<User> userFound = repo.findByUsername(user.getUsername());
         if (userFound.isPresent()) {
@@ -43,5 +50,14 @@ public class UserServiceImpl implements IUserService{
             throw new Exception("Password and confirmation password are not the same");
         }
         return true;
+    }
+
+    protected void mapUser(User from, User to) {
+        to.setFirstName(from.getFirstName());
+        to.setLastName(from.getLastName());
+        to.setEmail(from.getEmail());
+        to.setUsername(from.getUsername());
+        to.setRoles(from.getRoles());
+        to.setImgURL(from.getImgURL());
     }
 }

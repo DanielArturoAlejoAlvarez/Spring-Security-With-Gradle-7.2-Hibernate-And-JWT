@@ -8,4 +8,6 @@ public interface IUserService {
     User createUser(User user) throws Exception;
 
     User findById(Long id) throws Exception;
+
+    User updateUser(User user) throws Exception;
 }

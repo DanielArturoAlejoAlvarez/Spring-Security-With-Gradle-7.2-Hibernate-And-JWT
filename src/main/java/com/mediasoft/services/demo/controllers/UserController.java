@@ -71,4 +71,33 @@ public class UserController {
         model.addAttribute("editMode", "true");
         return "user-form/user-view";
     }
+
+    @PostMapping("/updateUser")
+    public String postEditUserForm(@Valid @ModelAttribute("userForm") User user, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("userForm", user);
+            model.addAttribute("formTab", "active");
+            model.addAttribute("editMode", "true");
+        }else {
+            try {
+                service.updateUser(user);
+                model.addAttribute("userForm", new User());
+                model.addAttribute("listTab", "active");
+                model.addAttribute("editMode", "false");
+            } catch (Exception e) {
+                model.addAttribute("formErrorMessage", e.getMessage());
+                model.addAttribute("userForm", user);
+                model.addAttribute("formTab", "active");
+                model.addAttribute("userList", service.getAllUsers());
+                model.addAttribute("roles", roleRepo.findAll());
+
+                model.addAttribute("editMode", "true");
+                //e.printStackTrace();
+            }
+        }
+
+        model.addAttribute("userList", service.getAllUsers());
+        model.addAttribute("roles", roleRepo.findAll());
+        return "user-form/user-view";
+    }
 }

@@ -20,4 +20,7 @@ public class ChangePasswordForm {
     @NotBlank(message = "Confirm Password must not be blank!")
     private String confirmPassword;
 
+    public ChangePasswordForm(Long id) {
+        this.id = id;
+    }
 }

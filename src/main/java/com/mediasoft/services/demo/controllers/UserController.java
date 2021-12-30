@@ -1,5 +1,6 @@
 package com.mediasoft.services.demo.controllers;
 
+import com.mediasoft.services.demo.dto.ChangePasswordForm;
 import com.mediasoft.services.demo.entities.User;
 import com.mediasoft.services.demo.repositories.IRole;
 import com.mediasoft.services.demo.services.IUserService;
@@ -69,6 +70,7 @@ public class UserController {
         model.addAttribute("roles", roleRepo.findAll());
 
         model.addAttribute("editMode", "true");
+        model.addAttribute("passwordForm", new ChangePasswordForm(id));
         return "user-form/user-view";
     }
 
@@ -78,6 +80,7 @@ public class UserController {
             model.addAttribute("userForm", user);
             model.addAttribute("formTab", "active");
             model.addAttribute("editMode", "true");
+            model.addAttribute("passwordForm", new ChangePasswordForm(user.getId()));
         }else {
             try {
                 service.updateUser(user);
@@ -92,6 +95,7 @@ public class UserController {
                 model.addAttribute("roles", roleRepo.findAll());
 
                 model.addAttribute("editMode", "true");
+                model.addAttribute("passwordForm", new ChangePasswordForm(user.getId()));
                 //e.printStackTrace();
             }
         }

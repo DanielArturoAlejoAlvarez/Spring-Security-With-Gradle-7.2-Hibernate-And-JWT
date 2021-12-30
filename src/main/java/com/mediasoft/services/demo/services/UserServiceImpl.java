@@ -25,6 +25,11 @@ public class UserServiceImpl implements IUserService{
         return user;
     }
 
+    @Override
+    public User findById(Long id) throws Exception {
+        return repo.findById(id).orElseThrow(() -> new Exception("User to edit does not exist!"));
+    }
+
     private boolean checkUsernameAvailable(User user) throws Exception {
         Optional<User> userFound = repo.findByUsername(user.getUsername());
         if (userFound.isPresent()) {

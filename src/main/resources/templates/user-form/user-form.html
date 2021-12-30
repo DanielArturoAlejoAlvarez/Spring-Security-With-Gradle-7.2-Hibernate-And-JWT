@@ -72,6 +72,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Image URL</label>
         <div class="col-lg-9">
+            <img th:if="${userForm.imgURL}" th:src="${userForm.imgURL}" width="100" class="img-fluid"/>
             <input class="form-control" type="text" th:field="${userForm.imgURL}" >
 
         </div>

@@ -19,7 +19,9 @@
         <th th:text="${user.username}"  scope="row"></th>
         <th scope="row"><img th:src="${user.imgURL}" width="72" class="img-fluid"/></th>
         <td>
-            <a href="#"><i class="fas fa-edit"></i></a> | <a href="#"><i class="fas fa-user-times"></i></a>
+            <a href="#" th:href="@{'/editUser/' + ${user.id}}">
+                <i class="fas fa-edit"></i></a> |
+            <a href="#" th:onclick="'javascript:confirmDelete(\''+ ${user.id} + '\');'"><i class="fas fa-user-times"></i></a>
         </td>
     </tr>
     </tbody>

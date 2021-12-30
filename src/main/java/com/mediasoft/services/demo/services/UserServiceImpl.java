@@ -27,7 +27,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User findById(Long id) throws Exception {
-        return repo.findById(id).orElseThrow(() -> new Exception("User to edit does not exist!"));
+        return repo.findById(id).orElseThrow(() -> new Exception("User to not exist!"));
     }
 
     @Override
@@ -35,6 +35,12 @@ public class UserServiceImpl implements IUserService{
         User toUser = findById(fromUser.getId());
         mapUser(fromUser,toUser);
         return repo.save(toUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) throws Exception {
+        User user = findById(id);
+        repo.delete(user);
     }
 
     private boolean checkUsernameAvailable(User user) throws Exception {
@@ -49,7 +55,7 @@ public class UserServiceImpl implements IUserService{
         if (user.getPasswordConfirmation() == null || user.getPasswordConfirmation().isEmpty()) {
             throw new Exception("Confirm Password is required!");
         }
-        
+
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             throw new Exception("Password and confirmation password are not the same");
         }

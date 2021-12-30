@@ -30,6 +30,8 @@ dependencies {
 	//runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.6.1'
+	implementation 'org.springframework.security:spring-security-test:5.5.1'
 }
 
 test {

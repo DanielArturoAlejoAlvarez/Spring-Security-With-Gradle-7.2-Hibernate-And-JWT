@@ -100,4 +100,9 @@ public class UserController {
         model.addAttribute("roles", roleRepo.findAll());
         return "user-form/user-view";
     }
+
+    @GetMapping("/userForm/cancel")
+    public String cancelEditUser(ModelMap modelMap) {
+        return "redirect:/userForm";
+    }
 }

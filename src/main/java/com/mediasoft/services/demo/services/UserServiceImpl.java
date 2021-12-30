@@ -46,6 +46,10 @@ public class UserServiceImpl implements IUserService{
     }
 
     private boolean checkPasswordValid(User user) throws Exception {
+        if (user.getPasswordConfirmation() == null || user.getPasswordConfirmation().isEmpty()) {
+            throw new Exception("Confirm Password is required!");
+        }
+        
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             throw new Exception("Password and confirmation password are not the same");
         }

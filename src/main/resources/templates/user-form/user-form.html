@@ -82,7 +82,7 @@
             <input type="reset" class="btn btn-secondary" value="Cancel">
             <input type="submit" class="btn btn-primary"
                    value="Save Changes">
-            <div class="alert-danger" th:if="${formErrorMessage}" th:text="*{formErrorMessage}">
+            <div class="text-center alert-danger" th:if="${formErrorMessage}" th:text="${formErrorMessage}">
                 Error Message
             </div>
         </div>

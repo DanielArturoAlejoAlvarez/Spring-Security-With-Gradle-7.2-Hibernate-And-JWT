@@ -47,6 +47,8 @@ public class UserController {
         }else {
             try {
                 service.createUser(user);
+                model.addAttribute("userForm", new User());
+                model.addAttribute("listTab", "active");
             } catch (Exception e) {
                 model.addAttribute("formErrorMessage", e.getMessage());
                 model.addAttribute("userForm", user);

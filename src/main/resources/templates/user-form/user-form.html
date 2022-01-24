@@ -1,97 +1,100 @@
-<form class="form" role="form" autocomplete="off" th:object="${userForm}" th:action="@{editMode} ? @{/updateUser} : @{/userForm}" method="POST">
-    <input type="hidden" th:field="${userForm.id}" th:if="${editMode}">
-    <input type="hidden" th:field="${userForm.password}" value="xxxx" th:if="${editMode}">
-    <input type="hidden" th:field="${userForm.passwordConfirmation}" value="xxxx" th:if="${editMode}">
+<div th:with="disableFields=!${editMode} and ${#authorization.expression('hasRole(''ROLE_USER'')')}">
+
+    <form class="form" role="form" autocomplete="off" th:object="${userForm}" th:action="@{editMode} ? @{/updateUser} : @{/userForm}" method="POST">
+        <input type="hidden" th:field="${userForm.id}" th:if="${editMode}">
+        <input type="hidden" th:field="${userForm.password}" value="xxxx" th:if="${editMode}">
+        <input type="hidden" th:field="${userForm.passwordConfirmation}" value="xxxx" th:if="${editMode}">
 
 
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">First name</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="text" th:field="${userForm.firstName}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
-                Error First Name
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">First name</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text" th:field="${userForm.firstName}" th:disabled="${disableFields}" >
+                <div class="alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                    Error First Name
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Last
-            name</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="text"  th:field="${userForm.lastName}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
-                Error Last Name
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Last
+                name</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text"  th:field="${userForm.lastName}" th:disabled="${disableFields}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                    Error Last Name
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Email</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="email" th:field="${userForm.email}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-                Error Email
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Email</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="email" th:field="${userForm.email}" th:disabled="${disableFields}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                    Error Email
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Username</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="text" th:field="${userForm.username}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-                Error Username
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Username</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="text" th:field="${userForm.username}" th:disabled="${disableFields}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                    Error Username
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label th:text="Roles" class="col-lg-3 col-form-label form-control-label"></label>
-        <div class="col-lg-9">
-            <select class="form-control" size="4" th:field="${userForm.roles}">
-                <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
-            </select>
-            <div class="alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">
-                Error Roles
+        <div class="form-group row">
+            <label th:text="Roles" class="col-lg-3 col-form-label form-control-label"></label>
+            <div class="col-lg-9">
+                <select class="form-control" size="4" th:field="${userForm.roles}" th:disabled="${disableFields}">
+                    <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+                <div class="alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">
+                    Error Roles
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group row" th:if="${editMode == null or editMode == false}">
-        <label class="col-lg-3 col-form-label form-control-label">Password</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="password" th:field="${userForm.password}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-                Error Password
+        <div class="form-group row" th:if="${editMode == null or editMode == false}">
+            <label class="col-lg-3 col-form-label form-control-label">Password</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="password" th:field="${userForm.password}" th:disabled="${disableFields}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                    Error Password
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group row" th:if="${editMode == null or editMode == false}">
-        <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="password" th:field="${userForm.passwordConfirmation}" >
-            <div class="alert-danger" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">
-                Error Password Confirmation
+        <div class="form-group row" th:if="${editMode == null or editMode == false}">
+            <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
+            <div class="col-lg-9">
+                <input class="form-control" type="password" th:field="${userForm.passwordConfirmation}" th:disabled="${disableFields}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">
+                    Error Password Confirmation
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Image URL</label>
-        <div class="col-lg-9">
-            <img th:if="${userForm.imgURL}" th:src="${userForm.imgURL}" width="100" class="img-fluid"/>
-            <input class="form-control" type="text" th:field="${userForm.imgURL}" >
+        <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label">Image URL</label>
+            <div class="col-lg-9">
+                <img th:if="${userForm.imgURL}" th:src="${userForm.imgURL}" width="100" class="img-fluid"/>
+                <input class="form-control" type="text" th:field="${userForm.imgURL}" th:disabled="${disableFields}">
 
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-lg-12 text-center">
-            <a class="btn btn-secondary" th:href="@{'/userForm/cancel}">Cancel</a>
-            <input type="submit" class="btn btn-primary"
-                   value="Save Changes" th:value="${editMode} ? 'UPDATE USER' : 'CREATE USER'">
-            <div class="text-center alert-danger" th:if="${formErrorMessage}" th:text="${formErrorMessage}">
-                Error Message
             </div>
         </div>
-    </div>
 
-</form>
+        <div class="form-group row">
+            <div class="col-lg-12 text-center">
+                <a class="btn btn-secondary" th:href="@{'/userForm/cancel}">Cancel</a>
+                <input type="submit" class="btn btn-primary"
+                       value="Save Changes" th:value="${editMode} ? 'UPDATE USER' : 'CREATE USER'">
+                <div class="text-center alert-danger" th:if="${formErrorMessage}" th:text="${formErrorMessage}">
+                    Error Message
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

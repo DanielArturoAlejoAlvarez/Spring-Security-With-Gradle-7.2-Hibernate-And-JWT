@@ -19,9 +19,12 @@
         <th th:text="${user.username}"  scope="row"></th>
         <th scope="row"><img th:src="${user.imgURL}" width="72" class="img-fluid"/></th>
         <td>
-            <a href="#" th:href="@{'/editUser/' + ${user.id}}">
-                <i class="fas fa-edit"></i></a> |
-            <a href="#" th:onclick="'javascript:confirmDelete(\''+ ${user.id} + '\');'"><i class="fas fa-user-times"></i></a>
+            <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or (${#authorization.expression('hasRole(''ROLE_USER'')')} and ${#httpServletRequest.remoteUser==user.username})">
+						<a href="#" th:href="@{'/editUser/'+ ${user.id}}"><i class="fas fa-edit"></i></a>
+					</span>
+            <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >
+					| <a href="#" th:onclick="'javascript:confirmDelete(\''+ ${user.id} +'\');'"><i class="fas fa-user-times"></i></a>
+					</span>
         </td>
     </tr>
     </tbody>

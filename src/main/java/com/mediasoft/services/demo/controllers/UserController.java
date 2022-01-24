@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private IRole roleRepo;
 
-    @GetMapping
+    @GetMapping({"/", "/login"})
     public String index() {
         return "index";
     }

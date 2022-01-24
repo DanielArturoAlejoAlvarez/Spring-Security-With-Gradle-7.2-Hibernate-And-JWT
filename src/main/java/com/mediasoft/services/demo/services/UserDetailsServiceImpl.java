@@ -2,6 +2,7 @@ package com.mediasoft.services.demo.services;
 
 import com.mediasoft.services.demo.entities.Role;
 import com.mediasoft.services.demo.repositories.IUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +18,7 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
-
+    @Autowired
     private IUser repo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

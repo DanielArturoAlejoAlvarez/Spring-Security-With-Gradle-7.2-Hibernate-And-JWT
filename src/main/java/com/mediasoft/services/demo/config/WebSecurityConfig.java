@@ -1,4 +1,4 @@
-package com.mediasoft.services.demo;
+package com.mediasoft.services.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Configuration
+
 @EnableWebSecurity
+@Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     String[] resources = new String[]{
             "/include/**",
@@ -31,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(resources)
                 .permitAll()
-                .antMatchers("/", "/index")
+                .antMatchers("/", "/index","/signup")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -51,18 +56,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout");
     }
 
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
         return bCryptPasswordEncoder;
     }
 
-    @Autowired
-    UserDetailsService userDetailsService;
 
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         //super.configure(auth);
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }

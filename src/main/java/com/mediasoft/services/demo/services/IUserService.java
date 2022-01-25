@@ -1,5 +1,6 @@
 package com.mediasoft.services.demo.services;
 
+import com.mediasoft.services.demo.dto.ChangePasswordForm;
 import com.mediasoft.services.demo.entities.User;
 
 public interface IUserService {
@@ -12,4 +13,6 @@ public interface IUserService {
     User updateUser(User user) throws Exception;
 
     void deleteUser(Long id) throws Exception;
+
+    User changePassword(ChangePasswordForm form) throws Exception;
 }

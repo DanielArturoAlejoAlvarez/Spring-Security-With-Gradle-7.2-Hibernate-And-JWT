@@ -1,14 +1,20 @@
 package com.mediasoft.services.demo.services;
 
+import com.mediasoft.services.demo.dto.ChangePasswordForm;
 import com.mediasoft.services.demo.entities.User;
 import com.mediasoft.services.demo.repositories.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService{
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     private IUser repo;
 
@@ -42,6 +48,28 @@ public class UserServiceImpl implements IUserService{
         User user = findById(id);
         repo.delete(user);
     }
+
+    @Override
+    public User changePassword(ChangePasswordForm form) throws Exception {
+        User user = findById(form.getId());
+        if (!isLoggedUserADMIN() && !user.getPassword().equals(form.getCurrentPassword())) {
+            throw new Exception("Current user invalid!");
+        }
+        if (user.getPassword().equals(form.getNewPassword())) {
+            throw new Exception("The new password must not be the same as the current one!");
+        }
+        if (!form.getNewPassword().equals(form.getConfirmPassword())) {
+            throw new Exception("The new password and confirmation password do not match!");
+        }
+        String encodePassword = bCryptPasswordEncoder.encode(form.getNewPassword());
+        user.setPassword(encodePassword);
+        return repo.save(user);
+    }
+
+    private boolean isLoggedUserADMIN() {
+        return false;
+    }
+
 
     private boolean checkUsernameAvailable(User user) throws Exception {
         Optional<User> userFound = repo.findByUsername(user.getUsername());

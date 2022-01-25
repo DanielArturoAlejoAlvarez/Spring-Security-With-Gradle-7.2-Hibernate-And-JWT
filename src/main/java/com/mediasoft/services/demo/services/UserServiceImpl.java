@@ -4,6 +4,8 @@ import com.mediasoft.services.demo.dto.ChangePasswordForm;
 import com.mediasoft.services.demo.entities.User;
 import com.mediasoft.services.demo.repositories.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +69,21 @@ public class UserServiceImpl implements IUserService{
     }
 
     private boolean isLoggedUserADMIN() {
-        return false;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails loggedUser = null;
+        Object roles = null;
+
+        //Verify obj get user session
+        if (principal instanceof UserDetails) {
+            loggedUser = (UserDetails) principal;
+            roles = loggedUser.getAuthorities().stream()
+                    .filter(x -> "ROLE_ADMIN".equals(x.getAuthority()))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return roles != null;
+
     }
 
 

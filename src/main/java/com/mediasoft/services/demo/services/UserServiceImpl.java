@@ -29,6 +29,8 @@ public class UserServiceImpl implements IUserService{
     @Override
     public User createUser(User user) throws Exception {
         if (checkPasswordValid(user) && checkUsernameAvailable(user)) {
+            String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
             user = repo.save(user);
         }
         return user;

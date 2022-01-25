@@ -4,6 +4,7 @@ import com.mediasoft.services.demo.dto.ChangePasswordForm;
 import com.mediasoft.services.demo.entities.User;
 import com.mediasoft.services.demo.repositories.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,6 +47,7 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void deleteUser(Long id) throws Exception {
         User user = findById(id);
         repo.delete(user);

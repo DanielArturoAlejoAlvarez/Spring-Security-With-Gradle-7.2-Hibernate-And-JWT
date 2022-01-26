@@ -1,6 +1,5 @@
 <div th:with="disableFields=!${editMode} and ${#authorization.expression('hasRole(''ROLE_USER'')')}">
-
-    <form class="form" role="form" autocomplete="off" th:object="${userForm}" th:action="@{editMode} ? @{/updateUser} : @{/userForm}" method="POST">
+    <form class="form" role="form" autocomplete="off"  th:object="${userForm}" th:action="${signup}?@{/signup}:(${editMode} ?@{/editUser} :@{/userForm})" method="post">
         <input type="hidden" th:field="${userForm.id}" th:if="${editMode}">
         <input type="hidden" th:field="${userForm.password}" value="xxxx" th:if="${editMode}">
         <input type="hidden" th:field="${userForm.passwordConfirmation}" value="xxxx" th:if="${editMode}">

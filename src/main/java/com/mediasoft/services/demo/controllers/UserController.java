@@ -1,6 +1,8 @@
 package com.mediasoft.services.demo.controllers;
 
+import com.mediasoft.services.demo.Exception.CustomeFieldValidationException;
 import com.mediasoft.services.demo.dto.ChangePasswordForm;
+import com.mediasoft.services.demo.entities.Role;
 import com.mediasoft.services.demo.entities.User;
 import com.mediasoft.services.demo.repositories.IRole;
 import com.mediasoft.services.demo.services.IUserService;
@@ -14,6 +16,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -28,6 +32,30 @@ public class UserController {
     @GetMapping({"/", "/login"})
     public String index() {
         return "index";
+    }
+
+
+
+    @PostMapping("/signup")
+    public String signupAction(@Valid @ModelAttribute("userForm")User user, BindingResult result, ModelMap model) {
+        Role userRole = roleRepo.findByName("USER");
+        List<Role> roles = Arrays.asList(userRole);
+        model.addAttribute("userForm", user);
+        model.addAttribute("roles",roles);
+        model.addAttribute("signup",true);
+
+        if(result.hasErrors()) {
+            return "user-form/user-signup";
+        }else {
+            try {
+                service.createUser(user);
+            } catch (CustomeFieldValidationException cfve) {
+                result.rejectValue(cfve.getFieldName(), null, cfve.getMessage());
+            }catch (Exception e) {
+                model.addAttribute("formErrorMessage",e.getMessage());
+            }
+        }
+        return index();
     }
 
     @GetMapping("/userForm")
@@ -125,20 +153,19 @@ public class UserController {
     }
 
     @PostMapping("/editUser/changePassword")
-    public ResponseEntity postEditUserChangePassword(@Valid @RequestBody ChangePasswordForm form, Errors errors) {
+    public ResponseEntity postEditUseChangePassword(@Valid @RequestBody ChangePasswordForm form, Errors errors) {
         try {
-            if (errors.hasErrors()) {
+            if( errors.hasErrors()) {
                 String result = errors.getAllErrors()
-                        .stream()
-                        .map(x -> x.getDefaultMessage())
+                        .stream().map(x -> x.getDefaultMessage())
                         .collect(Collectors.joining(""));
+
                 throw new Exception(result);
             }
             service.changePassword(form);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok("SUCCESS!");
+        return ResponseEntity.ok("Success");
     }
 }

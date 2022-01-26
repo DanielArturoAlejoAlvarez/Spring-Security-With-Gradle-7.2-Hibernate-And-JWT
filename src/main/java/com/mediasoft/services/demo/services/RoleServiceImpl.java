@@ -10,6 +10,7 @@ public class RoleServiceImpl implements IRoleService{
     @Autowired
     private IRole repo;
 
+
     @Override
     public Iterable<Role> getAllRoles() {
         return repo.findAll();

@@ -34,7 +34,16 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/signup")
+    public String signup(Model model) {
+        Role userRole = roleRepo.findByName("USER");
+        List<Role> roles = Arrays.asList(userRole);
 
+        model.addAttribute("signup",true);
+        model.addAttribute("userForm", new User());
+        model.addAttribute("roles",roles);
+        return "user-form/user-signup";
+    }
 
     @PostMapping("/signup")
     public String signupAction(@Valid @ModelAttribute("userForm")User user, BindingResult result, ModelMap model) {
